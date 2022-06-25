@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
-void main() {
+void main() async {
+  await initializeDateFormatting('ja_JP');
   runApp(const MyApp());
 }
 
@@ -83,7 +86,7 @@ class MyHomePage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                transaction.date.toString(),
+                                DateFormat.yMMMd('ja').format(transaction.date),
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey,

@@ -64,7 +64,7 @@ class MyHomePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              '${transaction.amount.toString()}円',
+                              '${transaction.amount}円',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,

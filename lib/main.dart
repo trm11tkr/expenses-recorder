@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 
-import './transaction.dart';
+import './widgets/user_transactions.dart';
 
 void main() async {
   await initializeDateFormatting('ja_JP');
@@ -19,28 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
-
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'new Books',
-      amount: 500,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'new Shoes',
-      amount: 8560,
-      date: DateTime.now(),
-    )
-  ];
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,56 +32,11 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Expenses Record'),
       ),
-      body: Center(
-        child: Column(
-            children: transactions
-                .map((transaction) => Card(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 15,
-                            ),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.purple,
-                                width: 2,
-                              ),
-                            ),
-                            child: Text(
-                              '${transaction.amount}円',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.purple,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                transaction.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              Text(
-                                DateFormat.yMMMd('ja').format(transaction.date),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ))
-                .toList()),
+      body: const Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: UserTransactions(),
+        ),
       ),
     );
   }

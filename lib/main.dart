@@ -42,6 +42,9 @@ class MyHomePage extends StatelessWidget {
     )
   ];
 
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,55 +52,87 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Expenses Record'),
       ),
       body: Center(
-        child: Column(
-            children: transactions
-                .map((transaction) => Card(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 15,
-                            ),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.purple,
-                                width: 2,
-                              ),
-                            ),
-                            child: Text(
-                              '${transaction.amount}円',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.purple,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                transaction.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(
+                      label: Text('使用目的'),
+                    ),
+                    controller: titleController,
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      label: Text('金額'),
+                    ),
+                    controller: amountController,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      print(titleController.text);
+                      print(amountController.text);
+                    },
+                    child: const Text('登録'),
+                  )
+                ],
+              ),
+              Column(
+                  children: transactions
+                      .map((transaction) => Card(
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 15,
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.purple,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '${transaction.amount}円',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.purple,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                DateFormat.yMMMd('ja').format(transaction.date),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      transaction.title,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat.yMMMd('ja')
+                                          .format(transaction.date),
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ))
-                .toList()),
+                              ],
+                            ),
+                          ))
+                      .toList()),
+            ],
+          ),
+        ),
       ),
     );
   }

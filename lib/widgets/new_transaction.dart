@@ -23,6 +23,7 @@ class NewTransaction extends StatelessWidget {
             label: Text('金額'),
           ),
           controller: amountController,
+          keyboardType:const TextInputType.numberWithOptions(decimal: true),
         ),
         TextButton(
           onPressed: () {

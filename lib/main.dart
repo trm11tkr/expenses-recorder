@@ -19,6 +19,21 @@ class MyApp extends StatelessWidget {
       title: 'Expenses Record',
       theme: ThemeData(
         primarySwatch: Colors.purple,
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              titleMedium: const TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        appBarTheme: ThemeData.light().appBarTheme.copyWith(
+              titleTextStyle: const TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
       ),
       home: const MyHomePage(),
     );

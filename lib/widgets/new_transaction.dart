@@ -32,29 +32,32 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        TextField(
-          decoration: const InputDecoration(
-            label: Text('使用目的'),
+    return  Container(
+      margin:const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          TextField(
+            decoration: const InputDecoration(
+              label: Text('使用目的'),
+            ),
+            controller: titleController,
+            onSubmitted: (_) => submitData(),
           ),
-          controller: titleController,
-          onSubmitted: (_) => submitData(),
-        ),
-        TextField(
-          decoration: const InputDecoration(
-            label: Text('金額'),
+          TextField(
+            decoration: const InputDecoration(
+              label: Text('金額'),
+            ),
+            controller: amountController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (_) => submitData(),
           ),
-          controller: amountController,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          onSubmitted: (_) => submitData(),
-        ),
-        TextButton(
-          onPressed: submitData,
-          child: const Text('登録'),
-        )
-      ],
+          TextButton(
+            onPressed: submitData,
+            child: const Text('登録'),
+          )
+        ],
+      ),
     );
   }
 }

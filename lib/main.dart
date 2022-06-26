@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 
 void main() async {
@@ -18,16 +19,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
-
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +38,7 @@ class MyHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextField(
-                    decoration: const InputDecoration(
-                      label: Text('使用目的'),
-                    ),
-                    controller: titleController,
-                  ),
-                  TextField(
-                    decoration: const InputDecoration(
-                      label: Text('金額'),
-                    ),
-                    controller: amountController,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      print(titleController.text);
-                      print(amountController.text);
-                    },
-                    child: const Text('登録'),
-                  )
-                ],
-              ),
+              NewTransaction(),
               TransactionList(),
             ],
           ),

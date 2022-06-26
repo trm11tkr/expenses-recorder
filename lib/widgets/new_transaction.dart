@@ -7,6 +7,20 @@ class NewTransaction extends StatelessWidget {
 
   final Function addTransaction;
 
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = int.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+
+    addTransaction(
+      enteredTitle,
+      enteredAmount,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,21 +31,18 @@ class NewTransaction extends StatelessWidget {
             label: Text('使用目的'),
           ),
           controller: titleController,
+          onSubmitted: (_) => submitData(),
         ),
         TextField(
           decoration: const InputDecoration(
             label: Text('金額'),
           ),
           controller: amountController,
-          keyboardType:const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onSubmitted: (_) => submitData(),
         ),
         TextButton(
-          onPressed: () {
-            addTransaction(
-              titleController.text,
-              int.parse(amountController.text),
-            );
-          },
+          onPressed: submitData,
           child: const Text('登録'),
         )
       ],

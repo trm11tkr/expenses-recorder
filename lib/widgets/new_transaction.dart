@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  NewTransaction({Key? key, required this.addTransaction}) : super(key: key);
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-
+class NewTransaction extends StatefulWidget {
+  const NewTransaction({Key? key, required this.addTransaction})
+      : super(key: key);
   final Function addTransaction;
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
 
   void submitData() {
     final enteredTitle = titleController.text;
@@ -15,37 +22,42 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTransaction(
+    widget.addTransaction(
       enteredTitle,
       enteredAmount,
     );
+
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        TextField(
-          decoration: const InputDecoration(
-            label: Text('使用目的'),
+    return  Container(
+      margin:const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          TextField(
+            decoration: const InputDecoration(
+              label: Text('使用目的'),
+            ),
+            controller: titleController,
+            onSubmitted: (_) => submitData(),
           ),
-          controller: titleController,
-          onSubmitted: (_) => submitData(),
-        ),
-        TextField(
-          decoration: const InputDecoration(
-            label: Text('金額'),
+          TextField(
+            decoration: const InputDecoration(
+              label: Text('金額'),
+            ),
+            controller: amountController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (_) => submitData(),
           ),
-          controller: amountController,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          onSubmitted: (_) => submitData(),
-        ),
-        TextButton(
-          onPressed: submitData,
-          child: const Text('登録'),
-        )
-      ],
+          TextButton(
+            onPressed: submitData,
+            child: const Text('登録'),
+          )
+        ],
+      ),
     );
   }
 }

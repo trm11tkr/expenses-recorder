@@ -31,12 +31,23 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expenses Record'),
+        actions: [
+          IconButton(
+            icon:const Icon(Icons.add),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: const Center(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: UserTransactions(),
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }

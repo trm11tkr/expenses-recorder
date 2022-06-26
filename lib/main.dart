@@ -40,7 +40,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: const Center(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.all(10),
           child: UserTransactions(),
         ),
       ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import './widgets/new_transaction.dart';
-import './widgets/transaction_list.dart';
+import './widgets/user_transactions.dart';
 
 void main() async {
   await initializeDateFormatting('ja_JP');
@@ -33,15 +32,10 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Expenses Record'),
       ),
-      body: Center(
+      body: const Center(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              NewTransaction(),
-              TransactionList(),
-            ],
-          ),
+          child: UserTransactions(),
         ),
       ),
     );

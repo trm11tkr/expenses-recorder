@@ -1,9 +1,10 @@
-import 'package:expenses_recorder/widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
+import './widgets/chart.dart';
+import './widgets/new_transaction.dart';
 
 void main() async {
   await initializeDateFormatting('ja_JP');
@@ -48,20 +49,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'new Books',
-      amount: 500,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'new Shoes',
-      amount: 8560,
-      date: DateTime.now(),
-    )
-  ];
+  final List<Transaction> _userTransactions = [];
+
+  // 1週間以内のトランザクションを取得
+  List<Transaction> get _recentTransaction {
+    return _userTransactions.where((transaction) {
+      return transaction.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addNewTransaction(String title, int amount) {
     final newTransaction = Transaction(
@@ -99,7 +98,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: TransactionList(transactions: _userTransactions),
+          child: Column(
+            children: [
+              Chart(recentTransactions: _recentTransaction),
+              Expanded(child: TransactionList(transactions: _userTransactions)),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

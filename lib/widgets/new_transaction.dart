@@ -32,8 +32,8 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      margin:const EdgeInsets.all(8.0),
+    return Container(
+      margin: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -52,7 +52,24 @@ class _NewTransactionState extends State<NewTransaction> {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onSubmitted: (_) => submitData(),
           ),
-          TextButton(
+          SizedBox(
+            height: 70,
+            child: Row(
+              children: [
+                const Text('日付が未選択です！'),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    '日付を選択',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ElevatedButton(
             onPressed: submitData,
             child: const Text('登録'),
           )

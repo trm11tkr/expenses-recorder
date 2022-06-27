@@ -25,47 +25,24 @@ class TransactionList extends StatelessWidget {
         : ListView.builder(
             itemBuilder: ((context, index) {
               return Card(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2,
-                        ),
-                      ),
-                      child: Text(
-                        '${transactions[index].amount}円',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
+                elevation: 5.0,
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: FittedBox(
+                          child: Text('${transactions[index].amount}円')),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          transactions[index].title,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        Text(
-                          DateFormat.yMMMd('ja')
-                              .format(transactions[index].date),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
+                  title: Text(
+                    transactions[index].title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  subtitle: Text(
+                    DateFormat.yMMMd('ja').format(transactions[index].date),
+                  ),
                 ),
               );
             }),

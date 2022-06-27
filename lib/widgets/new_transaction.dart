@@ -14,7 +14,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   final amountController = TextEditingController();
 
-  void submitData() {
+  void _submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = int.parse(amountController.text);
 
@@ -42,7 +42,7 @@ class _NewTransactionState extends State<NewTransaction> {
               label: Text('使用目的'),
             ),
             controller: titleController,
-            onSubmitted: (_) => submitData(),
+            onSubmitted: (_) => _submitData(),
           ),
           TextField(
             decoration: const InputDecoration(
@@ -50,7 +50,7 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             controller: amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onSubmitted: (_) => submitData(),
+            onSubmitted: (_) => _submitData(),
           ),
           SizedBox(
             height: 70,
@@ -70,7 +70,7 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
           ),
           ElevatedButton(
-            onPressed: submitData,
+            onPressed: _submitData,
             child: Text('登録', style: Theme.of(context).textTheme.bodySmall,),
           )
         ],

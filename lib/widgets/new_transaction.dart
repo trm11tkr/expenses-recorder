@@ -10,13 +10,13 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
 
-  final amountController = TextEditingController();
+  final _amountController = TextEditingController();
 
   void _submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = int.parse(amountController.text);
+    final enteredTitle = _titleController.text;
+    final enteredAmount = int.parse(_amountController.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
@@ -41,14 +41,14 @@ class _NewTransactionState extends State<NewTransaction> {
             decoration: const InputDecoration(
               label: Text('使用目的'),
             ),
-            controller: titleController,
+            controller: _titleController,
             onSubmitted: (_) => _submitData(),
           ),
           TextField(
             decoration: const InputDecoration(
               label: Text('金額'),
             ),
-            controller: amountController,
+            controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onSubmitted: (_) => _submitData(),
           ),
@@ -71,7 +71,10 @@ class _NewTransactionState extends State<NewTransaction> {
           ),
           ElevatedButton(
             onPressed: _submitData,
-            child: Text('登録', style: Theme.of(context).textTheme.bodySmall,),
+            child: Text(
+              '登録',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           )
         ],
       ),

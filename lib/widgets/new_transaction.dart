@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   const NewTransaction({Key? key, required this.addTransaction})
@@ -11,8 +12,8 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
-
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   void _submitData() {
     final enteredTitle = _titleController.text;
@@ -28,6 +29,21 @@ class _NewTransactionState extends State<NewTransaction> {
     );
 
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    );
+    if (pickedDate == null) {
+      return;
+    }
+    setState(() {
+      _selectedDate = pickedDate;
+    });
   }
 
   @override
@@ -56,9 +72,11 @@ class _NewTransactionState extends State<NewTransaction> {
             height: 70,
             child: Row(
               children: [
-                const Text('日付が未選択です！'),
+                Expanded(
+                  child: Text(setDateText(_selectedDate)),
+                ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: _presentDatePicker,
                   child: const Text(
                     '日付を選択',
                     style: TextStyle(
@@ -79,5 +97,14 @@ class _NewTransactionState extends State<NewTransaction> {
         ],
       ),
     );
+  }
+}
+
+// _selectedDateの状態に応じて表示テキストを変更
+String setDateText(DateTime? selectedDate) {
+  if (selectedDate == null) {
+    return '日付が選択されていません';
+  } else {
+    return '日付：${DateFormat.yMMMd('ja').format(selectedDate)}';
   }
 }

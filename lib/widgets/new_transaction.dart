@@ -71,7 +71,7 @@ class _NewTransactionState extends State<NewTransaction> {
           ),
           ElevatedButton(
             onPressed: submitData,
-            child: const Text('登録'),
+            child: Text('登録', style: Theme.of(context).textTheme.bodySmall,),
           )
         ],
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
@@ -7,7 +7,6 @@ import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 
 void main() async {
-  await initializeDateFormatting('ja_JP');
   runApp(const MyApp());
 }
 
@@ -40,6 +39,10 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: const MyHomePage(),
+      localizationsDelegates:const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
     );
   }
 }

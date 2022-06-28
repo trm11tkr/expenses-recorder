@@ -33,6 +33,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _presentDatePicker() async {
     DateTime? pickedDate = await showDatePicker(
+      locale: const Locale("ja"),
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),

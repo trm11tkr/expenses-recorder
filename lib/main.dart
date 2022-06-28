@@ -26,6 +26,12 @@ class MyApp extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              titleSmall: const TextStyle(
+                color: Colors.grey,
+                fontFamily: 'OpenSans',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
               bodySmall: const TextStyle(
                 color: Colors.white,
               ),

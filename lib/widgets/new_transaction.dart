@@ -30,6 +30,7 @@ class _NewTransactionState extends State<NewTransaction> {
     widget.addTransaction(
       enteredTitle,
       enteredAmount,
+      _selectedDate
     );
 
     Navigator.of(context).pop();

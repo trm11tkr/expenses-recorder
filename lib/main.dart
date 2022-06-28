@@ -88,6 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String transactionId) {
+    setState(() {
+      _userTransactions
+          .removeWhere((transaction) => transaction.id == transactionId);
+    });
+  }
+
   void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
         context: context,

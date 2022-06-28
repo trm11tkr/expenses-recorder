@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
@@ -7,7 +7,6 @@ import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 
 void main() async {
-  await initializeDateFormatting('ja_JP');
   runApp(const MyApp());
 }
 
@@ -27,6 +26,15 @@ class MyApp extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              titleSmall: const TextStyle(
+                color: Colors.grey,
+                fontFamily: 'OpenSans',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+              bodySmall: const TextStyle(
+                color: Colors.white,
+              ),
             ),
         appBarTheme: ThemeData.light().appBarTheme.copyWith(
               titleTextStyle: const TextStyle(
@@ -37,6 +45,10 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: const MyHomePage(),
+      localizationsDelegates:const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
     );
   }
 }
@@ -62,11 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String title, int amount) {
+  void _addNewTransaction(String title, int amount, DateTime chosenDate) {
     final newTransaction = Transaction(
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString(),
     );
 

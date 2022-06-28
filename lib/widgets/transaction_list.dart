@@ -33,8 +33,16 @@ class TransactionList extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FittedBox(
-                          child: Text('${transactions[index].amount}円')),
+                        child: Text('${transactions[index].amount}円'),
+                      ),
                     ),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Theme.of(context).errorColor,
+                    ),
+                    onPressed: () {},
                   ),
                   title: Text(
                     transactions[index].title,

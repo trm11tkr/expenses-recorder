@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         fontFamily: 'Quicksand',
+        errorColor: Colors.red,
         textTheme: ThemeData.light().textTheme.copyWith(
               titleMedium: const TextStyle(
                 fontFamily: 'OpenSans',
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: const MyHomePage(),
-      localizationsDelegates:const [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],

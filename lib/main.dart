@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         fontFamily: 'Quicksand',
+        errorColor: Colors.red,
         textTheme: ThemeData.light().textTheme.copyWith(
               titleMedium: const TextStyle(
                 fontFamily: 'OpenSans',
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: const MyHomePage(),
-      localizationsDelegates:const [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
@@ -87,6 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String transactionId) {
+    setState(() {
+      _userTransactions
+          .removeWhere((transaction) => transaction.id == transactionId);
+    });
+  }
+
   void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -113,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               Chart(recentTransactions: _recentTransaction),
-              Expanded(child: TransactionList(transactions: _userTransactions)),
+              Expanded(child: TransactionList(transactions: _userTransactions, deleteTransaction: _deleteTransaction,)),
             ],
           ),
         ),

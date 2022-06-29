@@ -107,8 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    var isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text('Expenses Record'),
       actions: [
@@ -119,9 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final txListWidget = SizedBox(
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           0.6,
       child: TransactionList(
         transactions: _userTransactions,
@@ -155,9 +155,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               if (!isLandscape)
                 SizedBox(
-                  height: (MediaQuery.of(context).size.height -
+                  height: (mediaQuery.size.height -
                           appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
+                          mediaQuery.padding.top) *
                       0.3,
                   child: Chart(recentTransactions: _recentTransaction),
                 ),
@@ -165,16 +165,16 @@ class _MyHomePageState extends State<MyHomePage> {
               if (isLandscape)
                 _showChart
                     ? SizedBox(
-                        height: (MediaQuery.of(context).size.height -
+                        height: (mediaQuery.size.height -
                                 appBar.preferredSize.height -
-                                MediaQuery.of(context).padding.top) *
+                                mediaQuery.padding.top) *
                             0.7,
                         child: Chart(recentTransactions: _recentTransaction),
                       )
                     : SizedBox(
-                        height: (MediaQuery.of(context).size.height -
+                        height: (mediaQuery.size.height -
                             appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top),
+                            mediaQuery.padding.top),
                         child: TransactionList(
                           transactions: _userTransactions,
                           deleteTransaction: _deleteTransaction,

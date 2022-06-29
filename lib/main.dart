@@ -116,13 +116,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return Scaffold(
       appBar: appBar,
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Chart(recentTransactions: _recentTransaction),
-              Expanded(child: TransactionList(transactions: _userTransactions, deleteTransaction: _deleteTransaction,)),
+              SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.4,
+                child: Chart(recentTransactions: _recentTransaction),
+              ),
+              SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.6,
+                child: TransactionList(
+                  transactions: _userTransactions,
+                  deleteTransaction: _deleteTransaction,
+                ),
+              ),
             ],
           ),
         ),

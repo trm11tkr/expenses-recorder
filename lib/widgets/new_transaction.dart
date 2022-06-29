@@ -27,11 +27,7 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addTransaction(
-      enteredTitle,
-      enteredAmount,
-      _selectedDate
-    );
+    widget.addTransaction(enteredTitle, enteredAmount, _selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -54,53 +50,60 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextField(
-            decoration: const InputDecoration(
-              label: Text('使用目的'),
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                label: Text('使用目的'),
+              ),
+              controller: _titleController,
+              onSubmitted: (_) => _submitData(),
             ),
-            controller: _titleController,
-            onSubmitted: (_) => _submitData(),
-          ),
-          TextField(
-            decoration: const InputDecoration(
-              label: Text('金額'),
+            TextField(
+              decoration: const InputDecoration(
+                label: Text('金額'),
+              ),
+              controller: _amountController,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _submitData(),
             ),
-            controller: _amountController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onSubmitted: (_) => _submitData(),
-          ),
-          SizedBox(
-            height: 70,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(setDateText(_selectedDate)),
-                ),
-                TextButton(
-                  onPressed: _presentDatePicker,
-                  child: const Text(
-                    '日付を選択',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+            SizedBox(
+              height: 70,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(setDateText(_selectedDate)),
+                  ),
+                  TextButton(
+                    onPressed: _presentDatePicker,
+                    child: const Text(
+                      '日付を選択',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: _submitData,
-            child: Text(
-              '登録',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        ],
+            ElevatedButton(
+              onPressed: _submitData,
+              child: Text(
+                '登録',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

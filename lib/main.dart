@@ -75,6 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+  bool _showChart = true;
+
   void _addNewTransaction(String title, int amount, DateTime chosenDate) {
     final newTransaction = Transaction(
       title: title,
@@ -121,13 +123,30 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              SizedBox(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.4,
-                child: Chart(recentTransactions: _recentTransaction),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'グラフを表示',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (val) {
+                        setState(() {
+                          _showChart = val;
+                        });
+                      }),
+                ],
               ),
+              if (_showChart)
+                SizedBox(
+                  height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.4,
+                  child: Chart(recentTransactions: _recentTransaction),
+                ),
               SizedBox(
                 height: (MediaQuery.of(context).size.height -
                         appBar.preferredSize.height -

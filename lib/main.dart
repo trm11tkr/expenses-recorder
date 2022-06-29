@@ -143,7 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       'グラフを表示',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    Switch(
+                    Switch.adaptive(
+                      activeColor: Theme.of(context).primaryColor,
                       value: _showChart,
                       onChanged: (val) {
                         setState(() {

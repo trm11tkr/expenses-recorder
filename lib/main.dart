@@ -107,6 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text('Expenses Record'),
       actions: [
@@ -116,6 +118,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    final txListWidget = SizedBox(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.6,
+      child: TransactionList(
+        transactions: _userTransactions,
+        deleteTransaction: _deleteTransaction,
+      ),
+    );
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -123,40 +135,51 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'グラフを表示',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Switch(
+              if (isLandscape)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'グラフを表示',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Switch(
                       value: _showChart,
                       onChanged: (val) {
                         setState(() {
                           _showChart = val;
                         });
-                      }),
-                ],
-              ),
-              if (_showChart)
+                      },
+                    ),
+                  ],
+                ),
+              if (!isLandscape)
                 SizedBox(
                   height: (MediaQuery.of(context).size.height -
                           appBar.preferredSize.height -
                           MediaQuery.of(context).padding.top) *
-                      0.4,
+                      0.3,
                   child: Chart(recentTransactions: _recentTransaction),
                 ),
-              SizedBox(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.6,
-                child: TransactionList(
-                  transactions: _userTransactions,
-                  deleteTransaction: _deleteTransaction,
-                ),
-              ),
+              if (!isLandscape) txListWidget,
+              if (isLandscape)
+                _showChart
+                    ? SizedBox(
+                        height: (MediaQuery.of(context).size.height -
+                                appBar.preferredSize.height -
+                                MediaQuery.of(context).padding.top) *
+                            0.7,
+                        child: Chart(recentTransactions: _recentTransaction),
+                      )
+                    : SizedBox(
+                        height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top),
+                        child: TransactionList(
+                          transactions: _userTransactions,
+                          deleteTransaction: _deleteTransaction,
+                        ),
+                      ),
             ],
           ),
         ),

@@ -132,58 +132,60 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              if (isLandscape)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'グラフを表示',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Switch.adaptive(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: _showChart,
-                      onChanged: (val) {
-                        setState(() {
-                          _showChart = val;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              if (!isLandscape)
-                SizedBox(
-                  height: (mediaQuery.size.height -
-                          appBar.preferredSize.height -
-                          mediaQuery.padding.top) *
-                      0.3,
-                  child: Chart(recentTransactions: _recentTransaction),
-                ),
-              if (!isLandscape) txListWidget,
-              if (isLandscape)
-                _showChart
-                    ? SizedBox(
-                        height: (mediaQuery.size.height -
-                                appBar.preferredSize.height -
-                                mediaQuery.padding.top) *
-                            0.7,
-                        child: Chart(recentTransactions: _recentTransaction),
-                      )
-                    : SizedBox(
-                        height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top),
-                        child: TransactionList(
-                          transactions: _userTransactions,
-                          deleteTransaction: _deleteTransaction,
-                        ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                if (isLandscape)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'グラフを表示',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-            ],
+                      Switch.adaptive(
+                        activeColor: Theme.of(context).primaryColor,
+                        value: _showChart,
+                        onChanged: (val) {
+                          setState(() {
+                            _showChart = val;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                if (!isLandscape)
+                  SizedBox(
+                    height: (mediaQuery.size.height -
+                            appBar.preferredSize.height -
+                            mediaQuery.padding.top) *
+                        0.3,
+                    child: Chart(recentTransactions: _recentTransaction),
+                  ),
+                if (!isLandscape) txListWidget,
+                if (isLandscape)
+                  _showChart
+                      ? SizedBox(
+                          height: (mediaQuery.size.height -
+                                  appBar.preferredSize.height -
+                                  mediaQuery.padding.top) *
+                              0.7,
+                          child: Chart(recentTransactions: _recentTransaction),
+                        )
+                      : SizedBox(
+                          height: (mediaQuery.size.height -
+                              appBar.preferredSize.height -
+                              mediaQuery.padding.top),
+                          child: TransactionList(
+                            transactions: _userTransactions,
+                            deleteTransaction: _deleteTransaction,
+                          ),
+                        ),
+              ],
+            ),
           ),
         ),
       ),

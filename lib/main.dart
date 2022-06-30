@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: const MyHomePage(),
+      // カレンダーを日本語に対応させるためにlocationのdelegateを設定
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -76,9 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }).toList();
   }
-
+  // 図を表示させるか
   bool _showChart = true;
 
+  // 新規トランザクション登録メソッド
   void _addNewTransaction(String title, int amount, DateTime chosenDate) {
     final newTransaction = Transaction(
       title: title,
@@ -92,13 +94,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // トランザクション削除メソッド
   void _deleteTransaction(String transactionId) {
     setState(() {
       _userTransactions
           .removeWhere((transaction) => transaction.id == transactionId);
     });
   }
-
+  // トランザクション追加ページを呼び出しメソッド
   void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -106,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return NewTransaction(addTransaction: _addNewTransaction);
         });
   }
-
+  // 横画面用のビルドメソッド
   List<Widget> _buildLandscapeContent(
       MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
     return [
@@ -139,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
           : txListWidget,
     ];
   }
-
+  // 縦画面用のビルドメソッド
   List<Widget> _buildPortraitContent(
       MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
     return [
@@ -167,6 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    // トランザクションリスト
     final txListWidget = SizedBox(
       height: isLandscape
           ? (mediaQuery.size.height -

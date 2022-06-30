@@ -107,6 +107,53 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  List<Widget> _buildLandscapeContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'グラフを表示',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Switch.adaptive(
+            activeColor: Theme.of(context).primaryColor,
+            value: _showChart,
+            onChanged: (val) {
+              setState(() {
+                _showChart = val;
+              });
+            },
+          ),
+        ],
+      ),
+      _showChart
+          ? SizedBox(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: Chart(recentTransactions: _recentTransaction),
+            )
+          : txListWidget,
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
+    return [
+      SizedBox(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.3,
+        child: Chart(recentTransactions: _recentTransaction),
+      ),
+      txListWidget,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -121,10 +168,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final txListWidget = SizedBox(
-      height: (mediaQuery.size.height -
+      height: isLandscape
+          ? (mediaQuery.size.height -
               appBar.preferredSize.height -
-              mediaQuery.padding.top) *
-          0.6,
+              mediaQuery.padding.top)
+          : (mediaQuery.size.height -
+                  appBar.preferredSize.height -
+                  mediaQuery.padding.top) *
+              0.6,
       child: TransactionList(
         transactions: _userTransactions,
         deleteTransaction: _deleteTransaction,
@@ -139,51 +190,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 if (isLandscape)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'グラフを表示',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Switch.adaptive(
-                        activeColor: Theme.of(context).primaryColor,
-                        value: _showChart,
-                        onChanged: (val) {
-                          setState(() {
-                            _showChart = val;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                  ..._buildLandscapeContent(mediaQuery, appBar, txListWidget),
                 if (!isLandscape)
-                  SizedBox(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.3,
-                    child: Chart(recentTransactions: _recentTransaction),
-                  ),
-                if (!isLandscape) txListWidget,
-                if (isLandscape)
-                  _showChart
-                      ? SizedBox(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.7,
-                          child: Chart(recentTransactions: _recentTransaction),
-                        )
-                      : SizedBox(
-                          height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top),
-                          child: TransactionList(
-                            transactions: _userTransactions,
-                            deleteTransaction: _deleteTransaction,
-                          ),
-                        ),
+                  ..._buildPortraitContent(mediaQuery, appBar, txListWidget),
               ],
             ),
           ),

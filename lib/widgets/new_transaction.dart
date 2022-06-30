@@ -15,6 +15,7 @@ class _NewTransactionState extends State<NewTransaction> {
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
 
+  // トランザクション登録メソッド（簡易バリデーション）
   void _submitData() {
     if (_amountController.text.isEmpty) {
       return;
@@ -28,10 +29,11 @@ class _NewTransactionState extends State<NewTransaction> {
     }
 
     widget.addTransaction(enteredTitle, enteredAmount, _selectedDate);
-
+    // 登録後にリスト一覧画面に戻す
     Navigator.of(context).pop();
   }
 
+  // カレンダー表示メソッド
   void _presentDatePicker() async {
     DateTime? pickedDate = await showDatePicker(
       locale: const Locale("ja"),

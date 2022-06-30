@@ -6,6 +6,8 @@ import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
   const Chart({Key? key, required this.recentTransactions}) : super(key: key);
+
+  // 1週間分のトランザクション
   final List<Transaction> recentTransactions;
 
   // 1週間分の出費を計算
@@ -26,7 +28,7 @@ class Chart extends StatelessWidget {
       return {'day': DateFormat.E('ja').format(weekDay), 'amount': totalSum};
     }).reversed.toList();
   }
-
+  // 出費の合計を計算
   double get totalSpending {
     return groupedTransactionValues.fold(0.0, (sum, item) {
       return sum + item['amount'];

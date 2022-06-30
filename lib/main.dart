@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: const MyHomePage(),
+      // カレンダーを日本語に対応させるためにlocationのdelegateを設定
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -76,9 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }).toList();
   }
-
+  // 図を表示させるか
   bool _showChart = true;
 
+  // 新規トランザクション登録メソッド
   void _addNewTransaction(String title, int amount, DateTime chosenDate) {
     final newTransaction = Transaction(
       title: title,
@@ -92,19 +94,67 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // トランザクション削除メソッド
   void _deleteTransaction(String transactionId) {
     setState(() {
       _userTransactions
           .removeWhere((transaction) => transaction.id == transactionId);
     });
   }
-
+  // トランザクション追加ページを呼び出しメソッド
   void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (_) {
           return NewTransaction(addTransaction: _addNewTransaction);
         });
+  }
+  // 横画面用のビルドメソッド
+  List<Widget> _buildLandscapeContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'グラフを表示',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Switch.adaptive(
+            activeColor: Theme.of(context).primaryColor,
+            value: _showChart,
+            onChanged: (val) {
+              setState(() {
+                _showChart = val;
+              });
+            },
+          ),
+        ],
+      ),
+      _showChart
+          ? SizedBox(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: Chart(recentTransactions: _recentTransaction),
+            )
+          : txListWidget,
+    ];
+  }
+  // 縦画面用のビルドメソッド
+  List<Widget> _buildPortraitContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
+    return [
+      SizedBox(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.3,
+        child: Chart(recentTransactions: _recentTransaction),
+      ),
+      txListWidget,
+    ];
   }
 
   @override
@@ -120,11 +170,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    // トランザクションリスト
     final txListWidget = SizedBox(
-      height: (mediaQuery.size.height -
+      height: isLandscape
+          ? (mediaQuery.size.height -
               appBar.preferredSize.height -
-              mediaQuery.padding.top) *
-          0.6,
+              mediaQuery.padding.top)
+          : (mediaQuery.size.height -
+                  appBar.preferredSize.height -
+                  mediaQuery.padding.top) *
+              0.6,
       child: TransactionList(
         transactions: _userTransactions,
         deleteTransaction: _deleteTransaction,
@@ -139,51 +194,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 if (isLandscape)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'グラフを表示',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Switch.adaptive(
-                        activeColor: Theme.of(context).primaryColor,
-                        value: _showChart,
-                        onChanged: (val) {
-                          setState(() {
-                            _showChart = val;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                  ..._buildLandscapeContent(mediaQuery, appBar, txListWidget),
                 if (!isLandscape)
-                  SizedBox(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.3,
-                    child: Chart(recentTransactions: _recentTransaction),
-                  ),
-                if (!isLandscape) txListWidget,
-                if (isLandscape)
-                  _showChart
-                      ? SizedBox(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.7,
-                          child: Chart(recentTransactions: _recentTransaction),
-                        )
-                      : SizedBox(
-                          height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top),
-                          child: TransactionList(
-                            transactions: _userTransactions,
-                            deleteTransaction: _deleteTransaction,
-                          ),
-                        ),
+                  ..._buildPortraitContent(mediaQuery, appBar, txListWidget),
               ],
             ),
           ),

@@ -8,9 +8,9 @@ class ChartBar extends StatelessWidget {
       required this.spendingPctOfTotal})
       : super(key: key);
 
-  final String label;
-  final int spendingAmount;
-  final double spendingPctOfTotal;
+  final String label; // 曜日
+  final int spendingAmount; // 合計料金
+  final double spendingPctOfTotal; // 1週間の出費に対する割合
 
   @override
   Widget build(BuildContext context) {
